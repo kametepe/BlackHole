@@ -542,5 +542,17 @@
   "unlike": "Non me place",
   "@unlike": {},
   "ytStreamQualitySub": "Un melior qualitate usa plus datos",
-  "@ytStreamQualitySub": {}
+  "@ytStreamQualitySub": {},
+  "downQualitySub": "Un melior qualitate usa plus de spatio de disco",
+  "@downQualitySub": {},
+  "nothingIs": "Nihil es ",
+  "@nothingIs": {},
+  "removed": "Removite",
+  "@removed": {},
+  "removedFrom": "Removite ab",
+  "@removedFrom": {},
+  "removedFromFav": "Removite ab le favoritos",
+  "@removedFromFav": {},
+  "sleepTimerSetFor": "Temporisator de somno definite pro",
+  "@sleepTimerSetFor": {}
 }
