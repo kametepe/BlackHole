@@ -118,6 +118,13 @@ class _SearchPageState extends State<SearchPage> {
             searchedList = value;
             fetched = true;
           });
+        }).catchError((e) {
+          Logger.root.severe(
+            'Unable to reach the youtube music service due to connection error Error: \n $e',
+          );
+          setState(() {
+            fetched = true;
+          });
         });
       case 'yt':
         Logger.root.info('calling youtube search');
@@ -126,6 +133,13 @@ class _SearchPageState extends State<SearchPage> {
             .then((value) {
           setState(() {
             searchedList = value;
+            fetched = true;
+          });
+        }).catchError((e) {
+          Logger.root.severe(
+            'Unable to reach the youtube service due to connection error Error: \n $e',
+          );
+          setState(() {
             fetched = true;
           });
         });
