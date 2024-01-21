@@ -381,6 +381,9 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
 
   Future<void> refreshLink(Map newData) async {
     Logger.root.info('player | received new link for ${newData['title']}');
+    if (newData['url'] == null) {
+      return;
+    }
     final MediaItem newItem = MediaItemConverter.mapToMediaItem(newData);
     // final String? boxName = mediaItem.extras!['playlistBox']?.toString();
     // if (boxName != null) {

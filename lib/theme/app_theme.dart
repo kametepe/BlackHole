@@ -49,8 +49,8 @@ class AppTheme {
         ),
       ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      appBarTheme: AppBarTheme(
-        backgroundColor: currentTheme.currentColor(),
+      appBarTheme: const AppBarTheme(
+        color: Color(0xfff5f9ff),
         foregroundColor: Colors.black,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),

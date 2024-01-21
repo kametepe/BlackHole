@@ -656,14 +656,25 @@ class _PlayScreenState extends State<PlayScreen> {
                               ]
                         : Theme.of(context).brightness == Brightness.dark
                             ? [
+                                // Top part
                                 if (gradientType == 'halfDark' ||
-                                    gradientType == 'fullDark')
+                                    gradientType == 'fullDark' ||
+                                    gradientType == 'fullDarkOnly')
                                   value?[1] ?? Colors.grey[900]!
                                 else
                                   value?[0] ?? Colors.grey[900]!,
-                                if (gradientType == 'fullMix')
+                                // Bottom part
+                                if (gradientType == 'fullMix' ||
+                                    gradientType == 'fullMixDarker' ||
+                                    gradientType == 'fullMixBlack' ||
+                                    gradientType == 'fullDarkOnly')
                                   value?[1] ?? Colors.black
                                 else
+                                  Colors.black,
+                                // Extra bottom part incase of full darker and black
+                                if (gradientType == 'fullMixDarker')
+                                  value?[1] ?? Colors.black,
+                                if (gradientType == 'fullMixBlack')
                                   Colors.black,
                               ]
                             : [
@@ -1050,46 +1061,46 @@ class NowPlayingStream extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      if (queue[queueStateIndex + index]
-                              .extras?['addedByAutoplay'] as bool? ??
-                          false)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                RotatedBox(
-                                  quarterTurns: 3,
-                                  child: Text(
-                                    AppLocalizations.of(context)!.addedBy,
-                                    textAlign: TextAlign.start,
-                                    style: const TextStyle(
-                                      fontSize: 5.0,
-                                    ),
-                                  ),
-                                ),
-                                RotatedBox(
-                                  quarterTurns: 3,
-                                  child: Text(
-                                    AppLocalizations.of(context)!.autoplay,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 8.0,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5.0,
-                            ),
-                          ],
-                        ),
+                      // if (queue[queueStateIndex + index]
+                      //         .extras?['addedByAutoplay'] as bool? ??
+                      //     false)
+                      //   Column(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     children: [
+                      //       Row(
+                      //         crossAxisAlignment: CrossAxisAlignment.end,
+                      //         children: [
+                      //           RotatedBox(
+                      //             quarterTurns: 3,
+                      //             child: Text(
+                      //               AppLocalizations.of(context)!.addedBy,
+                      //               textAlign: TextAlign.start,
+                      //               style: const TextStyle(
+                      //                 fontSize: 5.0,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //           RotatedBox(
+                      //             quarterTurns: 3,
+                      //             child: Text(
+                      //               AppLocalizations.of(context)!.autoplay,
+                      //               textAlign: TextAlign.start,
+                      //               style: TextStyle(
+                      //                 fontSize: 8.0,
+                      //                 color: Theme.of(context)
+                      //                     .colorScheme
+                      //                     .secondary,
+                      //                 fontWeight: FontWeight.w600,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 5.0,
+                      //       ),
+                      //     ],
+                      //   ),
                       Card(
                         elevation: 5,
                         margin: EdgeInsets.zero,
@@ -2203,7 +2214,7 @@ class NameNControls extends StatelessWidget {
             margin: EdgeInsets.zero,
             padding: EdgeInsets.zero,
             boxShadow: const [],
-            color: ['fullLight', 'fullMix'].contains(gradientType)
+            color: gradientType.contains('full')
                 ? Theme.of(context).brightness == Brightness.dark
                     ? const Color.fromRGBO(0, 0, 0, 0.05)
                     : const Color.fromRGBO(255, 255, 255, 0.05)
