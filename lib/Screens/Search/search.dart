@@ -315,6 +315,8 @@ class _SearchPageState extends State<SearchPage> {
                                           fetchResultCalled = false;
                                           fromHome = false;
                                           searchedList = [];
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
                                         },
                                       );
                                     },
@@ -402,6 +404,9 @@ class _SearchPageState extends State<SearchPage> {
                                                     fetchResultCalled = false;
                                                     fromHome = false;
                                                     searchedList = [];
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
                                                   },
                                                 );
                                               }
