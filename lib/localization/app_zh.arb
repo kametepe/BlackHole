@@ -724,5 +724,9 @@
   "restart": "你可能需要重启应用",
   "@restart": {},
   "restartRequired": "你需要重启应用",
-  "@restartRequired": {}
+  "@restartRequired": {},
+  "volumeGestureEnabled": "启用音量手势控制",
+  "@volumeGestureEnabled": {},
+  "volumeGestureEnabledSub": "在播放器屏幕的封面上使用垂直滑动替代水平滑动来控制音量",
+  "@volumeGestureEnabledSub": {}
 }
