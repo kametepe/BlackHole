@@ -58,7 +58,7 @@ class HandleRoute {
           )
               .then((Map data) {
             final List result = data['songs'] as List;
-            int index = findBestMatch(
+            final index = findBestMatch(
               result,
               {
                 'title': title,
