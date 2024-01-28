@@ -61,7 +61,7 @@ dependencies:
   share_plus: ^7.2.1
   sizer: ^2.0.15
   sliding_up_panel: ^2.0.0+1
-  url_launcher: ^6.2.3
+  url_launcher: ^6.2.4
   uuid: ^3.0.7
   # workmanager: ^0.5.1
   youtube_explode_dart: ^2.1.0

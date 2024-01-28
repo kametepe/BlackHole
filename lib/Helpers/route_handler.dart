@@ -20,6 +20,7 @@
 import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/APIs/spotify_api.dart';
 import 'package:blackhole/Helpers/audio_query.dart';
+import 'package:blackhole/Helpers/matcher.dart';
 import 'package:blackhole/Helpers/spotify_helper.dart';
 import 'package:blackhole/Screens/Common/song_list.dart';
 import 'package:blackhole/Screens/Player/audioplayer.dart';
@@ -40,8 +41,47 @@ class HandleRoute {
     // blackhole://blackhole/search?q=stay+with+me
     if (url.startsWith('/search')) {
       final uri = Uri.parse(url);
-      final query = uri.queryParameters['q'];
+      final String? title = uri.queryParameters['title']?.toString();
+      final String? artist = uri.queryParameters['artist']?.toString();
+      final bool autoplay = uri.queryParameters['autoplay'] == 'true';
+      final String? query =
+          title != null && artist != null ? '$title - $artist' : title;
+
+      Logger.root.info('received search query: $query');
+
       if (query != null) {
+        if (autoplay) {
+          SaavnAPI()
+              .fetchSongSearchResults(
+            searchQuery: query,
+            count: 3,
+          )
+              .then((Map data) {
+            final List result = data['songs'] as List;
+            int index = findBestMatch(
+              result,
+              {
+                'title': title,
+                'artist': artist ?? '',
+              },
+            );
+            if (index != -1) {
+              // found a song
+              PlayerInvoke.init(
+                songsList: [result[index] as Map],
+                index: 0,
+                isOffline: false,
+              );
+            } else {
+              return PageRouteBuilder(
+                pageBuilder: (_, __, ___) => SearchPage(
+                  query: query,
+                  fromDirectSearch: true,
+                ),
+              );
+            }
+          });
+        }
         return PageRouteBuilder(
           pageBuilder: (_, __, ___) => SearchPage(
             query: query,
