@@ -223,7 +223,7 @@
   "@removedFromFav": {},
   "restore": "Wiederherstellen",
   "@restore": {},
-  "restoreSub": "Stelle deine Daten aus der Sicherung wieder her.\nMöglicherweise musst du die Anwendung neu starten\n",
+  "restoreSub": "Stelle deine Daten aus der Sicherung wieder her.",
   "@restoreSub": {},
   "resultsNotFound": "Keine Ergebnisse",
   "@resultsNotFound": {},
@@ -724,5 +724,9 @@
   "restart": "Möglicherweise muss die Anwendung neu gestartet werden",
   "@restart": {},
   "restartRequired": "Die Anwendung muss neu gestartet werden",
-  "@restartRequired": {}
+  "@restartRequired": {},
+  "volumeGestureEnabled": "Aktivieren Sie die Lautstärkegestensteuerung",
+  "@volumeGestureEnabled": {},
+  "volumeGestureEnabledSub": "Verwenden Sie vertikales Wischen über das Bild im Player-Bildschirm, um die Lautstärke zu steuern, anstatt den Player nach unten zu schieben",
+  "@volumeGestureEnabledSub": {}
 }
