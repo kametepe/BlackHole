@@ -1234,7 +1234,9 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
             id: widget.mediaItem.id,
             saavnHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
             title: widget.mediaItem.title,
-            artist: widget.mediaItem.artist.toString(),
+            artist: widget.mediaItem.artist?.toString() ?? '',
+            album: widget.mediaItem.album?.toString() ?? '',
+            duration: (widget.mediaItem.duration?.inSeconds ?? 180).toString(),
           ).then((Map value) {
             lyrics['lyrics'] = value['lyrics'];
             lyrics['type'] = value['type'];
@@ -1265,6 +1267,8 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
         saavnHas: widget.mediaItem.extras?['has_lyrics'] == 'true',
         title: widget.mediaItem.title,
         artist: widget.mediaItem.artist.toString(),
+        album: widget.mediaItem.album?.toString() ?? '',
+        duration: (widget.mediaItem.duration?.inSeconds ?? 180).toString(),
       ).then((Map value) {
         if (widget.mediaItem.id != value['id']) {
           done.value = true;

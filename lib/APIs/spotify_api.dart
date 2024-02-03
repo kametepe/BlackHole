@@ -43,6 +43,8 @@ class SpotifyApi {
   final String spotifyFeaturedPlaylistsEndpoint = '/browse/featured-playlists';
   final String spotifyBaseUrl = 'https://accounts.spotify.com';
   final String requestToken = 'https://accounts.spotify.com/api/token';
+  final String playerAccessToken =
+      'https://open.spotify.com/get_access_token?reason=transport&productType=web_player';
 
   String requestAuthorization() =>
       'https://accounts.spotify.com/authorize?client_id=$clientID&response_type=code&redirect_uri=$redirectUrl&scope=${_scopes.join('%20')}';
@@ -111,6 +113,34 @@ class SpotifyApi {
       Logger.root.severe('Error in getting spotify access token: $e');
     }
     return [];
+  }
+
+  Future<Map> getPlayerAccessToken() async {
+    try {
+      final Uri path = Uri.parse(playerAccessToken);
+      final response = await get(
+        path,
+        headers: {
+          'User-Agent':
+              'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36',
+          'Accept': 'application/json',
+          'App-platform': 'WebPlayer',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map result = jsonDecode(response.body) as Map;
+        return result;
+      } else {
+        Logger.root.severe(
+          'Error in getPlayerAccessToken, called: $path, returned: ${response.statusCode}',
+          response.body,
+        );
+      }
+    } catch (e) {
+      Logger.root.severe('Error in getting spotify player access token: $e');
+    }
+    return {};
   }
 
   Future<List> getUserPlaylists(String accessToken) async {

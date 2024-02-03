@@ -433,7 +433,9 @@ class Download with ChangeNotifier {
             final Map res = await Lyrics.getLyrics(
               id: data['id'].toString(),
               title: data['title'].toString(),
-              artist: data['artist'].toString(),
+              artist: data['artist']?.toString() ?? '',
+              album: data['album']?.toString() ?? '',
+              duration: data['duration']?.toString() ?? '180',
               saavnHas: data['has_lyrics'] == 'true',
             );
             lyrics = res['lyrics'].toString();

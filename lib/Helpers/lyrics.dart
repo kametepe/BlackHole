@@ -33,7 +33,10 @@ class Lyrics {
     required String id,
     required String title,
     required String artist,
+    required String album,
+    required String duration,
     required bool saavnHas,
+    int iteration = 0,
   }) async {
     final Map<String, String> result = {
       'lyrics': '',
@@ -42,11 +45,14 @@ class Lyrics {
       'id': id,
     };
 
-    Logger.root.info('Getting Synced Lyrics');
-    final res = await getSpotifyLyrics(title, artist);
-    result['lyrics'] = res['lyrics']!;
-    result['type'] = res['type']!;
-    result['source'] = res['source']!;
+    if (iteration == 0) {
+      Logger.root.info('Getting Synced Lyrics');
+      // final res = await getSpotifyLyrics(title, artist);
+      final res = await getLrclibLyrics(title, artist, album, duration);
+      result['lyrics'] = res['lyrics']!;
+      result['type'] = res['type']!;
+      result['source'] = res['source']!;
+    }
     if (result['lyrics'] == '') {
       Logger.root.info('Synced Lyrics, not found. Getting text lyrics');
       if (saavnHas) {
@@ -59,7 +65,10 @@ class Lyrics {
             id: id,
             title: title,
             artist: artist,
+            album: album,
+            duration: duration,
             saavnHas: false,
+            iteration: iteration + 1,
           );
           result['lyrics'] = res['lyrics']!;
           result['type'] = res['type']!;
@@ -108,6 +117,49 @@ class Lyrics {
       Logger.root.severe('Error in getSaavnLyrics', e);
       return '';
     }
+  }
+
+  static Future<Map<String, String>> getLrclibLyrics(
+    String track,
+    String artist,
+    String album,
+    String duration,
+  ) async {
+    final Map<String, String> result = {
+      'lyrics': '',
+      'type': 'lrc',
+      'source': 'Lrclib',
+    };
+
+    final Uri lyricsUrl = Uri.https('lrclib.net', '/api/get', {
+      'track_name': track,
+      'artist_name': artist,
+      'album_name': album,
+      'duration': duration,
+    });
+    final Response res =
+        await get(lyricsUrl, headers: {'Accept': 'application/json'});
+    if (res.statusCode == 200) {
+      final Map lyricsData = await json.decode(res.body) as Map;
+      if (lyricsData['error'] == null) {
+        if (lyricsData['syncedLyrics'] != null &&
+            lyricsData['syncedLyrics'] != '') {
+          result['lyrics'] = lyricsData['syncedLyrics'].toString();
+        } else {
+          result['lyrics'] = lyricsData['plainLyrics'].toString();
+          result['type'] = 'text';
+        }
+        return result;
+      }
+    } else {
+      if (res.statusCode != 404) {
+        Logger.root.severe(
+          'getLrclibLyrics returned ${res.statusCode}',
+          res.body,
+        );
+      }
+    }
+    return result;
   }
 
   static Future<Map<String, String>> getSpotifyLyrics(
