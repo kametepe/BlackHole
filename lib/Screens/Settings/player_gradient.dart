@@ -86,6 +86,9 @@ class _PlayerGradientSelectionState extends State<PlayerGradientSelection> {
                   MediaQuery.sizeOf(context).height
               ? 6
               : 3,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          mainAxisSpacing: 5.0,
+          crossAxisSpacing: 5.0,
           physics: const BouncingScrollPhysics(),
           childAspectRatio: 0.6,
           children: types
@@ -107,7 +110,7 @@ class _PlayerGradientSelectionState extends State<PlayerGradientSelection> {
                             borderRadius: BorderRadius.circular(15.0),
                             side: BorderSide(
                               color: Theme.of(context).colorScheme.primary,
-                              width: gradientType == type ? 2.0 : 0.5,
+                              width: gradientType == type ? 1.0 : 0.3,
                             ),
                           ),
                           clipBehavior: Clip.antiAlias,
@@ -194,13 +197,16 @@ class _PlayerGradientSelectionState extends State<PlayerGradientSelection> {
                               ),
                             ),
                             const Spacer(),
-                            const Center(
+                            Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.skip_previous_rounded),
-                                  Icon(Icons.play_arrow_rounded),
-                                  Icon(Icons.skip_next_rounded),
+                                  const Icon(Icons.skip_previous_rounded),
+                                  if (gradientType == type)
+                                    const Icon(Icons.pause_rounded)
+                                  else
+                                    const Icon(Icons.play_arrow_rounded),
+                                  const Icon(Icons.skip_next_rounded),
                                 ],
                               ),
                             ),
