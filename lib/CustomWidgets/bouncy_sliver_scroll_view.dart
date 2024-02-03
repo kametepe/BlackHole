@@ -131,6 +131,7 @@ class BouncyImageSliverScrollView extends StatelessWidget {
               expandedHeight: expandedHeight,
               actions: actions,
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: EdgeInsets.zero,
                 title: Opacity(
                   opacity: max(0, min(1 - _opacity.value, 1)),
                   child: Text(

@@ -49,8 +49,23 @@ class _DownloadButtonState extends State<DownloadButton> {
     super.initState();
     down = Download(widget.data['id'].toString());
     down.addListener(() {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    showStopButton.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Set _mounted to true when the widget is added to the tree
+    // _mounted = true;
   }
 
   @override

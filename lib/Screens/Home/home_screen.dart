@@ -82,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       BoxConstraints constraints,
                     ) {
                       return FlexibleSpaceBar(
+                        titlePadding: EdgeInsets.zero,
                         // collapseMode: CollapseMode.parallax,
                         background: GestureDetector(
                           onTap: () async {

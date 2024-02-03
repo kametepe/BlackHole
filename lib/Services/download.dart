@@ -21,7 +21,7 @@ import 'dart:io';
 
 import 'package:audiotagger/audiotagger.dart';
 import 'package:audiotagger/models/tag.dart';
-import 'package:blackhole/CustomWidgets/snackbar.dart';
+// import 'package:blackhole/CustomWidgets/snackbar.dart';
 import 'package:blackhole/Helpers/lyrics.dart';
 import 'package:blackhole/Services/ext_storage_provider.dart';
 import 'package:blackhole/Services/youtube_services.dart';
@@ -158,7 +158,7 @@ class Download with ChangeNotifier {
           case 0:
             lastDownloadId = data['id'].toString();
           case 1:
-            downloadSong(context, dlPath, filename, data);
+            downloadSong(dlPath, filename, data);
           case 2:
             while (await File('$dlPath/$filename').exists()) {
               filename = filename.replaceAll('.m4a', ' (1).m4a');
@@ -254,7 +254,7 @@ class Download with ChangeNotifier {
                             onPressed: () async {
                               Navigator.pop(context);
                               Hive.box('downloads').delete(data['id']);
-                              downloadSong(context, dlPath, filename, data);
+                              downloadSong(dlPath, filename, data);
                               rememberOption = 1;
                             },
                             child:
@@ -274,7 +274,7 @@ class Download with ChangeNotifier {
                                     filename.replaceAll('.m4a', ' (1).m4a');
                               }
                               rememberOption = 2;
-                              downloadSong(context, dlPath, filename, data);
+                              downloadSong(dlPath, filename, data);
                             },
                             child: Text(
                               AppLocalizations.of(context)!.yes,
@@ -299,12 +299,11 @@ class Download with ChangeNotifier {
         );
       }
     } else {
-      downloadSong(context, dlPath, filename, data);
+      downloadSong(dlPath, filename, data);
     }
   }
 
   Future<void> downloadSong(
-    BuildContext context,
     String? dlPath,
     String fileName,
     Map data,
@@ -579,11 +578,11 @@ class Download with ChangeNotifier {
         };
         Hive.box('downloads').put(songData['id'].toString(), songData);
 
-        Logger.root.info('Everything done, showing snackbar');
-        ShowSnackBar().showSnackBar(
-          context,
-          '"${data['title']}" ${AppLocalizations.of(context)!.downed}',
-        );
+        Logger.root.info('Everything Done!');
+        // ShowSnackBar().showSnackBar(
+        //   context,
+        //   '"${data['title']}" ${AppLocalizations.of(context)!.downed}',
+        // );
       } else {
         download = true;
         progress = 0.0;

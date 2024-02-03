@@ -100,6 +100,7 @@ class BouncyPlaylistHeaderScrollView extends StatelessWidget {
         AnimatedBuilder(
           animation: scrollController,
           child: FlexibleSpaceBar(
+            titlePadding: EdgeInsets.zero,
             background: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
