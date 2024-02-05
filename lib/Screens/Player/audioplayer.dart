@@ -1320,7 +1320,6 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                         Colors.transparent,
                         Colors.black,
                         Colors.black,
-                        Colors.black,
                         Colors.transparent,
                       ],
                     ).createShader(
@@ -1332,7 +1331,6 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.symmetric(
-                        vertical: 60,
                         horizontal: 20,
                       ),
                       child: ValueListenableBuilder(
@@ -1359,10 +1357,12 @@ class _ArtWorkWidgetState extends State<ArtWorkWidget> {
                                     )
                                   : lyrics['type'] == 'text'
                                       ? SelectableText(
-                                          lyrics['lyrics'].toString(),
+                                          '\n' * 5 +
+                                              lyrics['lyrics'].toString() +
+                                              '\n' * 5,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                            fontSize: 16.0,
+                                            fontSize: 18.0,
                                           ),
                                         )
                                       : StreamBuilder<Duration>(

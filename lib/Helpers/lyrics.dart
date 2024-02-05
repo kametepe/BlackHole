@@ -110,8 +110,11 @@ class Lyrics {
       } else {
         fetchedLyrics = json.decode(rawLyrics[0]) as Map;
       }
-      final String lyrics =
-          fetchedLyrics['lyrics'].toString().replaceAll('<br>', '\n');
+      final String lyrics = fetchedLyrics['lyrics']
+              ?.toString()
+              .replaceAll('<br>', '\n')
+              .replaceAll(RegExp('[ ]{2,}'), ' ') ??
+          '';
       return lyrics;
     } catch (e) {
       Logger.root.severe('Error in getSaavnLyrics', e);
@@ -146,7 +149,10 @@ class Lyrics {
             lyricsData['syncedLyrics'] != '') {
           result['lyrics'] = lyricsData['syncedLyrics'].toString();
         } else {
-          result['lyrics'] = lyricsData['plainLyrics'].toString();
+          result['lyrics'] = lyricsData['plainLyrics']
+                  ?.toString()
+                  .replaceAll(RegExp('[ ]{2,}'), ' ') ??
+              '';
           result['type'] = 'text';
         }
         return result;
@@ -313,7 +319,7 @@ class Lyrics {
         }
       }
     }
-    return lyrics.trim();
+    return lyrics.trim().replaceAll(RegExp('[ ]{2,}'), ' ');
   }
 
   static Future<String> getOffLyrics(String path) async {
@@ -357,7 +363,7 @@ class Lyrics {
       final String link = await getLyricsLink(title, artist);
       Logger.root.info('Found Musixmatch Lyrics Link: $link');
       final String lyrics = await scrapLink(link);
-      return lyrics;
+      return lyrics.replaceAll(RegExp('[ ]{2,}'), ' ');
     } catch (e) {
       Logger.root.severe('Error in getMusixMatchLyrics', e);
       return '';
