@@ -407,7 +407,7 @@
   "@reset": {},
   "restore": "Pulihkan",
   "@restore": {},
-  "restoreSub": "Pulihkan data Anda dari Cadangan.\nAnda mungkin perlu memulai ulang aplikasi\n",
+  "restoreSub": "Pulihkan data Anda dari Cadangan.\nAnda mungkin perlu memulai ulang aplikasi",
   "@restoreSub": {},
   "resultsNotFound": "Hasil Tidak Ditemukan",
   "@resultsNotFound": {},
@@ -716,5 +716,11 @@
   "useLessDataImage": "Gunakan Lebih Sedikit Data untuk Gambar",
   "@useLessDataImage": {},
   "useLessDataImageSub": "Ini akan mengurangi kualitas gambar dalam aplikasi, tetapi akan menghemat data Anda",
-  "@useLessDataImageSub": {}
+  "@useLessDataImageSub": {},
+  "volumeGestureEnabled": "Nyalakan Kontrol Gestur Volume",
+  "@volumeGestureEnabled": {},
+  "restartRequired": "Anda perlu memulai ulang aplikasi",
+  "@restartRequired": {},
+  "volumeGestureEnabledSub": "Gunakan vertikal swipe pada Artwork di Layar Pemutar untuk mengontrol volume alih-alih menggeser pemutar ke bawah",
+  "@volumeGestureEnabledSub": {}
 }
