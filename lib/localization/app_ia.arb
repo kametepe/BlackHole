@@ -554,5 +554,11 @@
   "removedFromFav": "Removite ab le favoritos",
   "@removedFromFav": {},
   "sleepTimerSetFor": "Temporisator de somno definite pro",
-  "@sleepTimerSetFor": {}
+  "@sleepTimerSetFor": {},
+  "includeExcludeFolderSub": "Include/Exclude dossieres seligite ab le section 'Mi Musica'",
+  "@includeExcludeFolderSub": {},
+  "genre": "Genere",
+  "@genre": {},
+  "genres": "Generes",
+  "@genres": {}
 }
