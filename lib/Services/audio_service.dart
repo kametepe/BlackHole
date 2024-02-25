@@ -68,6 +68,8 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
   final BehaviorSubject<List<MediaItem>> _recentSubject =
       BehaviorSubject.seeded(<MediaItem>[]);
   final _playlist = ConcatenatingAudioSource(children: []);
+  final Set<String> currentQueueItems = {};
+
   @override
   final BehaviorSubject<double> volume = BehaviorSubject.seeded(1.0);
   @override
@@ -236,7 +238,11 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
                     limit: 15,
                   );
                   Logger.root.info('Recieved recommendations: $res');
-                  refreshLinks.addAll(res);
+                  for (final e in res) {
+                    if (!currentQueueItems.contains(e)) {
+                      refreshLinks.add(e);
+                    }
+                  }
                   if (!jobRunning) {
                     refreshJob();
                   }
@@ -286,6 +292,7 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
         if (mediaItem.value != null &&
             mediaItem.value!.genre == 'YouTube' &&
             position >= mediaItem.value!.duration!) {
+          Logger.root.info('Skipping to next item as duration crossed');
           skipToNext();
         }
       });
@@ -323,6 +330,7 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
             });
           } else {
             await _playlist.addAll(_itemsToSources(lastQueue));
+            currentQueueItems.addAll(lastQueue.map((e) => e.id));
             try {
               await _player!
                   .setAudioSource(
@@ -726,12 +734,14 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     final res = _itemToSource(mediaItem);
     if (res != null) {
       await _playlist.add(res);
+      currentQueueItems.add(mediaItem.id);
     }
   }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
     await _playlist.addAll(_itemsToSources(mediaItems));
+    currentQueueItems.addAll(mediaItems.map((e) => e.id));
   }
 
   @override
@@ -739,13 +749,16 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     final res = _itemToSource(mediaItem);
     if (res != null) {
       await _playlist.insert(index, res);
+      currentQueueItems.add(mediaItem.id);
     }
   }
 
   @override
   Future<void> updateQueue(List<MediaItem> newQueue) async {
     await _playlist.clear();
+    currentQueueItems.clear();
     await _playlist.addAll(_itemsToSources(newQueue));
+    currentQueueItems.addAll(newQueue.map((e) => e.id));
     // addLastQueue(newQueue);
     // stationId = '';
     // stationNames = newQueue.map((e) => e.id).toList();
@@ -778,11 +791,14 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
   Future<void> removeQueueItem(MediaItem mediaItem) async {
     final index = queue.value.indexOf(mediaItem);
     await _playlist.removeAt(index);
+    currentQueueItems.remove(mediaItem.id);
   }
 
   @override
   Future<void> removeQueueItemAt(int index) async {
     await _playlist.removeAt(index);
+    // won't remove from currentQueueItems
+    // so that same item don't gets added again
   }
 
   @override
@@ -931,6 +947,10 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
       skipToMediaItem(extras!['id'] as String?, extras['index'] as int?);
     }
     return super.customAction(name, extras);
+  }
+
+  bool isPresentInQueue(String id) {
+    return currentQueueItems.contains(id);
   }
 
   Future<Map> getEqParms() async {
