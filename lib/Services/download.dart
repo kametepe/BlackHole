@@ -33,6 +33,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:logging/logging.dart';
+import 'package:media_store_plus/media_store_plus.dart';
 import 'package:metadata_god/metadata_god.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -72,6 +73,7 @@ class Download with ChangeNotifier {
   bool downloadLyrics =
       Hive.box('settings').get('downloadLyrics', defaultValue: false) as bool;
   bool download = true;
+  final mediaStorePlugin = MediaStore();
 
   Future<void> prepareDownload(
     BuildContext context,
@@ -83,20 +85,25 @@ class Download with ChangeNotifier {
     download = true;
     if (Platform.isAndroid || Platform.isIOS) {
       Logger.root.info('Requesting storage permission');
-      PermissionStatus status = await Permission.storage.status;
-      if (status.isDenied) {
-        Logger.root.info('Request denied');
-        await [
-          Permission.storage,
-          Permission.accessMediaLocation,
-          Permission.mediaLibrary,
-        ].request();
+      final List<Permission> permissions = [
+        Permission.storage,
+      ];
+
+      if ((await mediaStorePlugin.getPlatformSDKInt()) >= 33) {
+        permissions.add(Permission.audio);
       }
-      status = await Permission.storage.status;
-      if (status.isPermanentlyDenied) {
-        Logger.root.info('Request permanently denied');
-        await openAppSettings();
-      }
+
+      final permiRes = await permissions.request();
+      permiRes.forEach((key, value) {
+        if (value.isDenied) {
+          Logger.root.info('Request denied');
+        }
+        if (value.isPermanentlyDenied) {
+          Logger.root.info('Request permanently denied');
+          openAppSettings();
+        }
+      });
+      MediaStore.appFolder = 'BlackHole';
     }
     final RegExp avoid = RegExp(r'[\.\\\*\:\"\?#/;\|]');
     data['title'] = data['title'].toString().split('(From')[0].trim();
@@ -314,59 +321,30 @@ class Download with ChangeNotifier {
     String? filepath;
     late String filepath2;
     String? appPath;
+    String? cachePath;
     final List<int> bytes = [];
     String lyrics = '';
     final artname = fileName.replaceAll('.m4a', '.jpg');
     if (!Platform.isWindows) {
       Logger.root.info('Getting App Path for storing image');
-      appPath = Hive.box('settings').get('tempDirPath')?.toString();
-      appPath ??= (await getTemporaryDirectory()).path;
+      cachePath = Hive.box('settings').get('tempDirPath')?.toString();
+      cachePath ??= (await getTemporaryDirectory()).path;
+      appPath = (await getExternalStorageDirectory())?.path ?? cachePath;
     } else {
       final Directory? temp = await getDownloadsDirectory();
       appPath = temp!.path;
     }
 
-    try {
-      Logger.root.info('Creating audio file $dlPath/$fileName');
-      await File('$dlPath/$fileName')
-          .create(recursive: true)
-          .then((value) => filepath = value.path);
-      Logger.root.info('Creating image file $appPath/$artname');
-      await File('$appPath/$artname')
-          .create(recursive: true)
-          .then((value) => filepath2 = value.path);
-    } catch (e) {
-      Logger.root
-          .info('Error creating files, requesting additional permission');
-      if (Platform.isAndroid) {
-        PermissionStatus status = await Permission.manageExternalStorage.status;
-        if (status.isDenied) {
-          Logger.root.info(
-            'ManageExternalStorage permission is denied, requesting permission',
-          );
-          await [
-            Permission.manageExternalStorage,
-          ].request();
-        }
-        status = await Permission.manageExternalStorage.status;
-        if (status.isPermanentlyDenied) {
-          Logger.root.info(
-            'ManageExternalStorage Request is permanently denied, opening settings',
-          );
-          await openAppSettings();
-        }
-      }
+    Logger.root.info('Creating audio file $dlPath/$fileName');
+    await File('$appPath/$fileName')
+        .create(recursive: true)
+        .then((value) => filepath = value.path);
 
-      Logger.root.info('Retrying to create audio file');
-      await File('$dlPath/$fileName')
-          .create(recursive: true)
-          .then((value) => filepath = value.path);
+    Logger.root.info('Creating image file $appPath/$artname');
+    await File('$appPath/$artname')
+        .create(recursive: true)
+        .then((value) => filepath2 = value.path);
 
-      Logger.root.info('Retrying to create image file');
-      await File('$appPath/$artname')
-          .create(recursive: true)
-          .then((value) => filepath2 = value.path);
-    }
     String kUrl = data['url'].toString();
 
     if (!data['url'].toString().contains('google')) {
@@ -577,6 +555,15 @@ class Download with ChangeNotifier {
           'dateAdded': DateTime.now().toString(),
         };
         Hive.box('downloads').put(songData['id'].toString(), songData);
+
+        Logger.root.info('Moving file to download path');
+
+        await MediaStore().saveFile(
+          tempFilePath: filepath!,
+          dirType: DirType.audio,
+          dirName: DirType.audio.defaults,
+          relativePath: 'BlackHole',
+        );
 
         Logger.root.info('Everything Done!');
         // ShowSnackBar().showSnackBar(

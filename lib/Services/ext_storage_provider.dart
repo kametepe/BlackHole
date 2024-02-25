@@ -18,6 +18,7 @@
  */
 
 import 'dart:io';
+import 'package:logging/logging.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -41,18 +42,24 @@ class ExtStorageProvider {
   static Future<String?> getExtStorage({
     required String dirName,
     required bool writeAccess,
+    bool externalStorage = true,
   }) async {
     Directory? directory;
 
     try {
       // checking platform
       if (Platform.isAndroid) {
-        if (await requestPermission(Permission.storage)) {
+        if (await requestPermission(Permission.audio)) {
           directory = await getExternalStorageDirectory();
 
           // getting main path
-          final String newPath = directory!.path
-              .replaceFirst('Android/data/com.shadow.blackhole/files', dirName);
+          String newPath = '${directory!.path}/$dirName';
+          if (externalStorage) {
+            newPath = newPath.replaceFirst(
+              'Android/data/com.shadow.blackhole/files',
+              dirName,
+            );
+          }
 
           directory = Directory(newPath);
 
@@ -60,8 +67,8 @@ class ExtStorageProvider {
           if (!await directory.exists()) {
             // if directory not exists then asking for permission to create folder
             await requestPermission(Permission.manageExternalStorage);
-            //creating folder
 
+            //creating folder
             await directory.create(recursive: true);
           }
           if (await directory.exists()) {
@@ -76,7 +83,8 @@ class ExtStorageProvider {
             }
           }
         } else {
-          return throw 'something went wrong';
+          Logger.root.severe('Permission not granted');
+          return throw 'Permission not granted';
         }
       } else if (Platform.isIOS || Platform.isMacOS) {
         directory = await getApplicationDocumentsDirectory();
@@ -87,6 +95,7 @@ class ExtStorageProvider {
         return '${directory!.path}/$dirName';
       }
     } catch (e) {
+      Logger.root.severe('Error in getExtStorage:', e);
       rethrow;
     }
     return directory.path;
