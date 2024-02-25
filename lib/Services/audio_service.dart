@@ -283,19 +283,10 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     //For autochanging the song from Youtube and is an ios or mac
     if (Platform.isIOS || Platform.isMacOS) {
       _player!.positionStream.listen((position) {
-        final itemIndex =
-            queue.value.indexWhere((item) => item.id == mediaItem.value?.id);
-        if (itemIndex != -1) {
-          final item = queue.value[itemIndex];
-          if (item.genre == 'YouTube' && position >= item.duration!) {
-            if (playbackState.value.repeatMode.name == 'None' &&
-                itemIndex + 1 == queue.value.length) {
-              _player!.pause();
-              _player!.seek(Duration.zero, index: 0);
-            } else {
-              skipToNext();
-            }
-          }
+        if (mediaItem.value != null &&
+            mediaItem.value!.genre == 'YouTube' &&
+            position >= mediaItem.value!.duration!) {
+          skipToNext();
         }
       });
     }
