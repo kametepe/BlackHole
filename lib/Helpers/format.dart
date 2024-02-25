@@ -533,13 +533,15 @@ class FormatResponse {
 
   static Future<Map> formatPromoLists(Map data) async {
     try {
-      final List promoList = data['collections_temp'] as List;
-      for (int i = 0; i < promoList.length; i++) {
-        data[promoList[i]] =
-            await formatSongsInList(data[promoList[i]] as List);
+      if (data.isNotEmpty) {
+        final List promoList = data['collections_temp'] as List? ?? [];
+        for (int i = 0; i < promoList.length; i++) {
+          data[promoList[i]] =
+              await formatSongsInList(data[promoList[i]] as List);
+        }
+        data['collections'].addAll(promoList);
+        data['collections_temp'] = [];
       }
-      data['collections'].addAll(promoList);
-      data['collections_temp'] = [];
     } catch (e) {
       Logger.root.severe('Error inside formatPromoLists: $e');
     }
