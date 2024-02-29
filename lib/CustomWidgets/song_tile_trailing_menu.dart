@@ -346,11 +346,7 @@ class _YtSongTileTrailingMenuState extends State<YtSongTileTrailingMenu> {
             context,
             MaterialPageRoute(
               builder: (context) => SearchPage(
-                query: widget.data['title']
-                    .toString()
-                    .replaceAll(RegExp(r'\(Official .*'), '')
-                    .trim(),
-                fromDirectSearch: true,
+                query: widget.data['title'].toString(),
               ),
             ),
           );
