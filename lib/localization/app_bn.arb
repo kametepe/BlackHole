@@ -1,5 +1,5 @@
 {
-  "aboutLine1": "এটি একটি ওপেন সোর্স প্রজেক্ট এবং এটির সোর্স কোড পাওয়া যাবে গিটহাবে",
+  "aboutLine1": "এটি একটি ওপেন সোর্স প্রজেক্ট এবং এটির সোর্স কোড পাওয়া যাবে",
   "@aboutLine1": {},
   "aboutLine2": "আপনি যদি আমার কাজটি পছন্দ করেন\nতাহলে কিছু ♥ দেখাবেন এবং রেপোতে ⭐দিয়েন",
   "@aboutLine2": {},
@@ -266,5 +266,21 @@
   "finish": "সমাপ্ত",
   "@finish": {},
   "fetchingStream": "অডিও স্ট্রীম গ্রহন করা হচ্ছে",
-  "@fetchingStream": {}
+  "@fetchingStream": {},
+  "importSpotify": "স্পটিফাই থেকে ইম্পোর্ট করুন",
+  "@importSpotify": {},
+  "importYt": "ইউটিউব থেকে ইম্পোর্ট করুন",
+  "@importYt": {},
+  "importSuccess": "ইম্পোর্টটি সফল হয়েছে",
+  "@importSuccess": {},
+  "includeExcludeFolderSub": "নির্বাচিত ফোল্ডার যোগ/বাদ দিন 'আমার সঙ্গীত' থেকে",
+  "@includeExcludeFolderSub": {},
+  "importFile": "ফাইল থেকে ইম্পোর্ট করুন",
+  "@importFile": {},
+  "includeExcludeFolder": "যোগ/বাদ ফোল্ডার",
+  "@includeExcludeFolder": {},
+  "inc": "বৃদ্ধি পাচ্ছে",
+  "@inc": {},
+  "importPublicPlaylist": "পাবলিক প্লেলিষ্ট থেকে ইম্পোর্ট করুন",
+  "@importPublicPlaylist": {}
 }
