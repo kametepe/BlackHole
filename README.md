@@ -4,31 +4,22 @@
 
 An Open-Source Music Player App for all your needs!
 
-[![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/) ![Release](https://img.shields.io/github/v/release/Sangwan5688/BlackHole) ![Downloads](https://img.shields.io/github/downloads/Sangwan5688/BlackHole/total)
-[![Build](https://github.com/Sangwan5688/BlackHole/actions/workflows/flutter.yml/badge.svg)](https://github.com/Sangwan5688/BlackHole/actions/workflows/flutter.yml)
+[![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/) ![Release](https://img.shields.io/github/v/release/kametepe/BlackHole) ![Downloads](https://img.shields.io/github/downloads/kametepe/BlackHole/total)
+[![Build](https://github.com/Sangwan5688/BlackHole/actions/workflows/flutter.yml/badge.svg)](https://github.com/kametepe/BlackHole/actions/workflows/flutter.yml)
 [![Translation-Status](https://hosted.weblate.org/widgets/blackhole/-/translations/svg-badge.svg)](https://hosted.weblate.org/engage/blackhole/)
 
 ### Don't forget to :star: the repo
 
-[![GitHub stars](https://img.shields.io/github/stars/Sangwan5688/BlackHole.svg?style=social&label=Star)](https://github.com//Sangwan5688/BlackHole) ![GitHub forks](https://img.shields.io/github/forks/Sangwan5688/BlackHole.svg?style=social&label=Forks) ![GitHub followers](https://img.shields.io/github/followers/Sangwan5688.svg?style=social&label=Follow)
+[![GitHub stars](https://img.shields.io/github/stars/kametepe/BlackHole.svg?style=social&label=Star)](https://github.com//kametepe/BlackHole) ![GitHub forks](https://img.shields.io/github/forks/kametepe/BlackHole.svg?style=social&label=Forks) ![GitHub followers](https://img.shields.io/github/followers/kametepe.svg?style=social&label=Follow)
 
 ## Download
 
-[<img src="get_website.png"
-     alt="Download from Website"
-     height="90">](https://sangwan5688.github.io/download/)
+
 [<img src="get_github.png"
      alt="Download from GitHub"
-     height="90">](https://github.com/Sangwan5688/BlackHole/releases)
-[<img src="get_telegram.png"
-     alt="Join Telegram Channel"
-     height="90">](https://t.me/blackhole_official)
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="90">](https://f-droid.org/packages/com.shadow.blackhole/)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
-     alt="Get it on IzzyDroid"
-     height="90">](https://android.izzysoft.de/repo/apk/com.shadow.blackhole)
+     height="90">](https://github.com/kametepe/BlackHole/releases)
+ 
+ 
 
 ## Translations
 - [Turkish :tr:](/README.TR.md)
@@ -88,7 +79,7 @@ Check it yourself :)
 ## License
 
 ```
-Copyright © 2021 Ankit Sangwan
+Copyright © 2024 Koudjo forked from Ankit Sangwan
 
 BlackHole is a free software licensed under GPL v3.0
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -120,7 +111,7 @@ See the [GNU General Public License](https://github.com/Sangwan5688/BlackHole/bl
 2. Fetch latest source code from master branch.
 
 ```
-git clone https://github.com/Sangwan5688/BlackHole.git
+git clone https://github.com/kametepe/BlackHole.git
 ```
 
 3. Run the app with Android Studio or VS Code. Or the command line:
@@ -132,23 +123,21 @@ flutter run
 
 ## Contribute
 
-Contributions are welcome. Please read our [contributing guidelines](https://github.com/Sangwan5688/BlackHole/blob/main/CONTRIBUTING.md) before contributing.
+Contributions are welcome. Please read our [contributing guidelines](https://github.com/kametepe/BlackHole/blob/main/CONTRIBUTING.md) before contributing.
 
 ## Facing any Issue?
 
-Have a look at some [common Issues](https://github.com/Sangwan5688/BlackHole/wiki/Common-Issues) that you might face. If your problem is not there, feel free to open an Issue :)
+Have a look at some [common Issues](https://github.com/kametepe/BlackHole/wiki/Common-Issues) that you might face. If your problem is not there, feel free to open an Issue :)
 
-## Want to test Beta Versions? Need help??
+ 
 
-You can join our [Telegram Channel](https://t.me/blackhole_official) or [Telegram Group](https://t.me/joinchat/fHDC1AWnOhw0ZmI9), if you have any query, or need help with something as well as to get beta updates of the project.
-
-## Liked my work?
+## Liked my work, buy Ankit Sangwan a Coffee for ?
 
 <a href="https://www.buymeacoffee.com/ankitsangwan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## What's New
 
-To read full changelog visit the [wiki page](https://github.com/Sangwan5688/BlackHole/wiki/Changelog)
+To read full changelog visit the [wiki page](https://github.com/kametepe/BlackHole/wiki/Changelog)
 
 
 ## Disclaimer
