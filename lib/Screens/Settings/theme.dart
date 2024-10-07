@@ -48,7 +48,7 @@ class _ThemePageState extends State<ThemePage> {
   Map userThemes =
       Hive.box('settings').get('userThemes', defaultValue: {}) as Map;
   String themeColor =
-      Hive.box('settings').get('themeColor', defaultValue: 'Deep Orange') as String;
+      Hive.box('settings').get('themeColor', defaultValue: 'Teal') as String;
   int colorHue = Hive.box('settings').get('colorHue', defaultValue: 400) as int;
 
   @override
@@ -806,7 +806,7 @@ class _ThemePageState extends State<ThemePage> {
                             : selectedTheme['cardColor'] as String;
 
                         themeColor = themeChoice == deflt
-                            ? 'Deep Orange'
+                            ? 'Teal'
                             : selectedTheme['accentColor'] as String;
                         colorHue = themeChoice == deflt
                             ? 400
