@@ -74,6 +74,9 @@ class YouTubeServices {
     if (vid == null) {
       return null;
     }
+
+     
+
     final Map? response = await formatVideo(
       video: vid,
       quality: Hive.box('settings')
@@ -372,11 +375,17 @@ class YouTubeServices {
     String expireAt = '0';
     if (getUrl) {
       urlsData = await getYtStreamUrls(video.id.value);
-      final Map finalUrlData =
-          quality == 'High' ? urlsData.last : urlsData.first;
+
+      
+ if(urlsData.length > 0){
+   final Map finalUrlData =
+          quality == 'High' ? urlsData.last : urlsData.first;         
       finalUrl = finalUrlData['url'].toString();
       expireAt = finalUrlData['expireAt'].toString();
       allUrls = urlsData.map((e) => e['url'].toString()).toList();
+
+ }
+   
     }
     return {
       'id': video.id.value,
@@ -536,6 +545,9 @@ class YouTubeServices {
 
       // check cache first
       if (Hive.box('ytlinkcache').containsKey(videoId)) {
+    //    print("\n");
+    //   print("ytlinkcache");
+   //    print("\n");
         final cachedData = Hive.box('ytlinkcache').get(videoId);
         if (cachedData is List) {
           int minExpiredAt = 0;
@@ -561,6 +573,8 @@ class YouTubeServices {
         }
       } else {
         //cache not present
+        //print("cache not present");
+        // print("\n");
         urlData = await getUri(videoId);
       }
 
@@ -592,8 +606,17 @@ class YouTubeServices {
     String videoId,
     // {bool preferM4a = true}
   ) async {
+   //   print("getUri");
+    //     print("\n");
+
     final List<AudioOnlyStreamInfo> sortedStreamInfo =
         await getStreamInfo(videoId);
+
+        
+      //   print(sortedStreamInfo);
+      //    print("\n");
+ // print("\n");
+
     return sortedStreamInfo
         .map(
           (e) => {
@@ -612,9 +635,17 @@ class YouTubeServices {
     String videoId, {
     bool onlyMp4 = false,
   }) async {
-    final StreamManifest manifest =
+
+   // print("manifest");
+   // print("\n");
+
+     List<AudioOnlyStreamInfo> sortedStreamInfo = [];
+
+try {
+ // print('Awaiting Video manifest ...');
+       final StreamManifest manifest =
         await yt.videos.streamsClient.getManifest(VideoId(videoId));
-    final List<AudioOnlyStreamInfo> sortedStreamInfo = manifest.audioOnly
+    sortedStreamInfo = manifest.audioOnly
         .toList()
       ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
     if (onlyMp4 || Platform.isIOS || Platform.isMacOS) {
@@ -626,6 +657,11 @@ class YouTubeServices {
         return m4aStreams;
       }
     }
+} catch (err) {
+  print('Caught error: $err');
+}
+
+
 
     return sortedStreamInfo;
   }

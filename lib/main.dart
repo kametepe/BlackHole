@@ -299,7 +299,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, orientation) {
               SizerUtil.setScreenSize(constraints, orientation);
               return MaterialApp(
-                title: 'BlackHole',
+                title: 'Musica',
                 restorationScopeId: 'blackhole',
                 debugShowCheckedModeBanner: false,
                 themeMode: AppTheme.themeMode,

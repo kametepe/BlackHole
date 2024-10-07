@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               children: [
                                 RichText(
                                   text: TextSpan(
-                                    text: 'Black\nHole\n',
+                                    text: 'Musica\n',
                                     style: TextStyle(
                                       height: 0.97,
                                       fontSize: 80,
@@ -129,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     ),
                                     children: <TextSpan>[
                                       const TextSpan(
-                                        text: 'Music',
+                                        text: 'Player',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 80,

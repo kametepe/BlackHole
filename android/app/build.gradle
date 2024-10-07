@@ -48,6 +48,7 @@ android {
     }
 
     // remove signingConfigs when running debug version
+  /*
     signingConfigs {
         release {
             storeFile file(keystoreProperties['storeFile'])
@@ -58,7 +59,14 @@ android {
             v2SigningEnabled true
         }
     }
-
+    */
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+       }
+    }
+    
+ /*
     buildTypes {
         // replace release with "debug" when running on debug version
         release {
@@ -67,7 +75,7 @@ android {
             signingConfig signingConfigs.release
             shrinkResources false
         }
-    }
+    } */
 
     lintOptions {
         checkReleaseBuilds false
